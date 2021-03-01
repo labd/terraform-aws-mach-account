@@ -41,6 +41,12 @@ resource "aws_iam_policy" "apigateway" {
   policy      = data.aws_iam_policy_document.apigateway.json
 }
 
+resource "aws_iam_role_policy" "apigateway" {
+  name   = "api-gateway-policy"
+  role   = aws_iam_role.mach_role.id
+  policy = data.aws_iam_policy_document.apigateway.json
+}
+
 resource "aws_iam_user_policy_attachment" "apigateway" {
   user       = aws_iam_user.mach_user.name
   policy_arn = aws_iam_policy.apigateway.arn
@@ -74,6 +80,12 @@ resource "aws_iam_policy" "componentrepo" {
   path        = "/"
   description = "Policy to read from the components repository"
   policy      = data.aws_iam_policy_document.componentrepo.json
+}
+
+resource "aws_iam_role_policy" "componentrepo" {
+  name   = "component-repository-policy"
+  role   = aws_iam_role.mach_role.id
+  policy = data.aws_iam_policy_document.componentrepo.json
 }
 
 resource "aws_iam_user_policy_attachment" "componentrepo" {
@@ -174,6 +186,12 @@ resource "aws_iam_policy" "mach_deploy" {
   path        = "/"
   description = "Basic MACH deploy policies"
   policy      = data.aws_iam_policy_document.mach_deploy.json
+}
+
+resource "aws_iam_role_policy" "mach_deploy" {
+  name   = "mach-deploy"
+  role   = aws_iam_role.mach_role.id
+  policy = data.aws_iam_policy_document.mach_deploy.json
 }
 
 resource "aws_iam_user_policy_attachment" "mach_deploy" {

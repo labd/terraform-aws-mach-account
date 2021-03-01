@@ -18,5 +18,9 @@ variable "aws_account_alias" {
 }
 
 variable "mach_user_name" {
-  default = "mach-user"
+  default = "mach"
+}
+
+variable "mach_role_name" {
+  default = "mach"
 }

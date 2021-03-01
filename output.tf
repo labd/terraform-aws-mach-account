@@ -1,8 +1,8 @@
-# output "deploy_role_arn" {
-#   value = aws_iam_role.mach_role.arn
-# }
+output "mach_role_id" {
+  value = aws_iam_role.mach_role.id
+}
 
-output "deploy_user_name" {
+output "mach_user_name" {
   value = aws_iam_user.mach_user.name
 }
 

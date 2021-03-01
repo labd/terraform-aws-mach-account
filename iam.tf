@@ -26,25 +26,23 @@ resource "aws_ssm_parameter" "mach_user_credentials_secret_key" {
 /**
  * Create a role for deployment purposes
  */
-# data "aws_iam_policy_document" "deploy_role_assume" {
-#   statement {
-#     actions = ["sts:AssumeRole"]
+data "aws_iam_policy_document" "deploy_role_assume" {
+  statement {
+    actions = ["sts:AssumeRole"]
 
-#     principals {
-#       type = "AWS"
+    principals {
+      type = "AWS"
 
-#       identifiers = var.deploy_principle_identifiers
-#     }
-#   }
-# }
+      identifiers = concat(
+        var.deploy_principle_identifiers, [
+          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+        ]
+      )
+    }
+  }
+}
 
-# resource "aws_iam_role" "mach_role" {
-#   name = "mach-role"
-#   assume_role_policy = data.aws_iam_policy_document.deploy_role_assume.json
-# }
-
-# resource "aws_iam_role_policy" "deploy_policy" {
-#   name   = "deployment-policy"
-#   role   = aws_iam_role.deploy.id
-#   policy = data.aws_iam_policy_document.deploy_policy.json
-# }
+resource "aws_iam_role" "mach_role" {
+  name = var.mach_role_name
+  assume_role_policy = data.aws_iam_policy_document.deploy_role_assume.json
+}
