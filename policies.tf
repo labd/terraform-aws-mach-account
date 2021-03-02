@@ -55,43 +55,43 @@ resource "aws_iam_user_policy_attachment" "apigateway" {
 # 
 # Component repository
 #
-data "aws_iam_policy_document" "componentrepo" {
-  statement {
-    actions = [
-      "s3:GetObject"
-    ]
-    resources = [
-      "arn:aws:s3:::${var.code_repository_name}/*",
-    ]
-  }
+# data "aws_iam_policy_document" "componentrepo" {
+#   statement {
+#     actions = [
+#       "s3:GetObject"
+#     ]
+#     resources = [
+#       "arn:aws:s3:::${var.code_repository_name}/*",
+#     ]
+#   }
 
-  statement {
-    actions = [
-      "s3:ListBucket"
-    ]
-    resources = [
-      "arn:aws:s3:::${var.code_repository_name}"
-    ]
-  }
-}
+#   statement {
+#     actions = [
+#       "s3:ListBucket"
+#     ]
+#     resources = [
+#       "arn:aws:s3:::${var.code_repository_name}"
+#     ]
+#   }
+# }
 
-resource "aws_iam_policy" "componentrepo" {
-  name        = "component-repository-policy"
-  path        = "/"
-  description = "Policy to read from the components repository"
-  policy      = data.aws_iam_policy_document.componentrepo.json
-}
+# resource "aws_iam_policy" "componentrepo" {
+#   name        = "component-repository-policy"
+#   path        = "/"
+#   description = "Policy to read from the components repository"
+#   policy      = data.aws_iam_policy_document.componentrepo.json
+# }
 
-resource "aws_iam_role_policy" "componentrepo" {
-  name   = "component-repository-policy"
-  role   = aws_iam_role.mach_role.id
-  policy = data.aws_iam_policy_document.componentrepo.json
-}
+# resource "aws_iam_role_policy" "componentrepo" {
+#   name   = "component-repository-policy"
+#   role   = aws_iam_role.mach_role.id
+#   policy = data.aws_iam_policy_document.componentrepo.json
+# }
 
-resource "aws_iam_user_policy_attachment" "componentrepo" {
-  user       = aws_iam_user.mach_user.name
-  policy_arn = aws_iam_policy.componentrepo.arn
-}
+# resource "aws_iam_user_policy_attachment" "componentrepo" {
+#   user       = aws_iam_user.mach_user.name
+#   policy_arn = aws_iam_policy.componentrepo.arn
+# }
 
 # 
 # Various
